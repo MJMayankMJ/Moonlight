@@ -38,6 +38,8 @@ struct ContentView: View {
     ContentView()
 }
 
+//MARK: - GrideView
+
 struct GridView: View {
     
     let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
@@ -80,6 +82,8 @@ struct GridView: View {
         .padding([.horizontal, .bottom])
     }
 }
+
+//MARK: - ListView
 
 struct ListView: View {
     
