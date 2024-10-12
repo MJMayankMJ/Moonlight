@@ -8,17 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var path = NavigationPath()
     
     @State private var type = true
+    let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
+    let missions: [Mission] = Bundle.main.decode("missions.json")
     
     var body: some View {
-        NavigationStack{
+        NavigationStack(path: $path){
             ScrollView{
                 if type {
                     GridView()
                 } else {
                     ListView()
                 }
+            }
+            .navigationDestination(for: Mission.self){ mission in
+                MissionView(mission: mission, astronauts: astronauts)
+            }
+            .navigationDestination(for: CrewMember.self){ crewMember in
+                AstronautView(astronaut: crewMember.astronaut)
             }
             .navigationTitle("Moonshoot")
             .background(.darkBackground)
@@ -30,8 +39,7 @@ struct ContentView: View {
                     type.toggle()
                 }
             }
-        }
-    }
+        }    }
 }
 
 #Preview {
@@ -51,9 +59,7 @@ struct GridView: View {
     var body: some View {
         LazyVGrid(columns: columns){
             ForEach(missions){ mission in
-                NavigationLink {
-                    MissionView(mission: mission, astronauts: astronauts)
-                } label: {
+                NavigationLink (value: mission){
                     VStack{
                         Image(mission.image)
                             .resizable()
@@ -76,6 +82,7 @@ struct GridView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(.lightBackground)
                     )
+                
                 }
             }
         }
@@ -93,9 +100,7 @@ struct ListView: View {
     var body: some View {
         LazyVStack{
             ForEach(missions){ mission in
-                NavigationLink {
-                    MissionView(mission: mission, astronauts: astronauts)
-                } label: {
+                NavigationLink(value: mission){
                     HStack{
                         Image(mission.image)
                             .resizable()

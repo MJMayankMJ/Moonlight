@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CrewMember{
+struct CrewMember: Hashable{
     let role: String
     let astronaut: Astronaut
 }
@@ -93,10 +93,8 @@ struct MissionCrewView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack{
                 ForEach(crew, id: \.role){ crewMember in
-                    NavigationLink{
-                        AstronautView(astronaut: crewMember.astronaut)
-                    } label: {
-                        HStack{
+                    NavigationLink(value: crewMember){
+                    HStack{
                             Image(crewMember.astronaut.id)
                                 .resizable()
                                 .frame(width: 104, height: 72)
