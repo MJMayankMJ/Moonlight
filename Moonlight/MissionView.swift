@@ -94,7 +94,7 @@ struct MissionCrewView: View {
             HStack{
                 ForEach(crew, id: \.role){ crewMember in
                     NavigationLink(value: crewMember){
-                    HStack{
+                        HStack{
                             Image(crewMember.astronaut.id)
                                 .resizable()
                                 .frame(width: 104, height: 72)
@@ -111,6 +111,10 @@ struct MissionCrewView: View {
                                     .foregroundStyle(.white.opacity(0.5))
                             }
                         }
+                        .accessibilityElement()
+                        .accessibilityAddTraits(.isButton)
+                        .accessibilityLabel(crewMember.astronaut.name)
+                        .accessibilityHint(crewMember.role)
                         .padding(.horizontal)
                     }
                 }

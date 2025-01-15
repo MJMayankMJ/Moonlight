@@ -33,13 +33,15 @@ struct ContentView: View {
             .background(.darkBackground)
             .preferredColorScheme(.dark)
             .toolbar{
-                Button("GridView to List or Vice Versa",
-                       systemImage: type ? "circle.grid.3x3.circle.fill" : "list.dash"
-                ) {
+                Button {
                     type.toggle()
+                } label: {
+                    Image(systemName: type ? "circle.grid.3x3.circle.fill" : "list.dash")
                 }
+                .accessibilityElement()
             }
-        }    }
+        }
+    }
 }
 
 #Preview {
@@ -65,6 +67,7 @@ struct GridView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 100, height: 100)
+                            .accessibilityElement()
                         VStack{
                             Text(mission.displayName)
                                 .font(.headline)
@@ -106,6 +109,7 @@ struct ListView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 100, height: 100)
+                            .accessibilityElement()
                         VStack{
                             Text(mission.displayName)
                                 .font(.headline)
